@@ -1704,7 +1704,9 @@
 
   // Active section highlight in nav
   const navLinks = document.querySelectorAll('header nav a[href^="#"]');
-  const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const sections = Array.from(navLinks)
+    .map(a => { const h = a.getAttribute('href'); return (h && h.length > 1) ? document.querySelector(h) : null; })
+    .filter(Boolean);
   const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
