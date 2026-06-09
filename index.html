@@ -1741,15 +1741,15 @@
     const btn = document.getElementById('video-sound-btn');
     if (!video || !btn) return;
     const label = btn.querySelector('.video-sound-label');
-    btn.addEventListener('click', () => {
-      video.muted = !video.muted;
-      const on = !video.muted;
+    function setState(on) {
+      video.muted = !on;
+      if (on) video.volume = 1;
       btn.classList.toggle('is-on', on);
       if (label) label.textContent = on ? '소리 끄기' : '소리 켜기';
       btn.setAttribute('aria-label', on ? '소리 끄기' : '소리 켜기');
-      // 소리를 켰는데 혹시 멈춰 있으면 재생 보장
       if (on) video.play().catch(() => {});
-    });
+    }
+    btn.addEventListener('click', () => setState(video.muted));
   })();
 </script>
 
